@@ -1,0 +1,64 @@
+/*
+ * Example solutions to the tasks in praktikum_3.txt
+ * Try to solve them yourself first and then come here as means of verification
+ */
+
+1)	sort -k 3 -t ':' /etc/passwd
+	cat /etc/passwd | sort -k 3 -t ':'	
+
+2)	sort -k 3 -t ':' -n /etc/passwd
+	cat /etc/passwd | sort -k 3 -t ':' -n 
+
+3)	cut -f 1,5 -d ':'
+	cat /etc/passwd | cut -f 1,5 -d ':'
+
+4)	cat /etc/passwd | cut -c 2-6				-> if we want 2-6 char for every line
+	cat /etc/passwd | head -c 6 | tail -c +2		-> if we want 2-6 char 
+	// note that there would be no new line put automatically
+	echo $(cat /etc/passwd | head -c 6 | tail -c +2)	-> one way to put a new line in there
+
+5)	cat /etc/passwd | wc -ml
+
+6)
+6.1)	cat /etc/passwd | head -n 12	
+6.2)	cat /etc/passwd | head -c 26	// note that there would be no new line automatically
+6.3)	cat /etc/passwd | head -n -4
+6.4)	cat /etc/passwd | tail -n 17
+6.5.1)	cat /etc/passwd | head -n 151 | tail -n 1
+6.5.2)	cat -n /etc/passwd | grep "^\s*151" | cut -f2	// fancy way using grep	
+	// for 6.6.{1,2} note that the final "\n" counts as a character
+6.6.1)	cat /etc/passwd | head -n 13 | tail -n 1 | tail -c 4		
+6.6.2)	cat -n /etc/passwd | grep "^\s*13" | cut -f 2 | tail -c 4	
+
+7)	cat /etc/passwd | cut -f 1,6 -d ':'
+	// what if we wanted the 5th field, but only the name without the comment? Next time with grep
+
+8)	cat /etc/passwd | cut -f 2 -d '/'
+
+9)	ls -l ~ > ls_result
+
+	cat ~/ls_result | tail -n +2 | sort -k 2 	// tail is to remove the "total ..." line
+	cat ~/ls_result | tail -n +2 | sort -k 2 -n
+
+10)	cat /etc/passwd | grep "^s61234"
+
+11)	cat /etc/passwd | cut -f 1 -d ':' > ~/users
+
+12)	cat /etc/services | grep "^#" | wc -l	// when we only want comments that take the whole line
+						// check the file if there is actually such comment - try with 'less'
+	cat /etc/services | grep "#" | wc -l	// when no comment is left behind
+
+13)	cat /etc/services | tr -s "\t" | cut -f 1,2 | grep "\<1337\>" | cut -f 1
+	// \< = beginning of word, \> = end of word
+
+14)	// the tricky part here is to figure out which command produces such information
+	// turns out a command like "file" might do the job
+
+	file /bin/* | grep "shell script" | wc -l
+	file <dir_name>/* | grep "ASCII text" | wc -l
+
+	* is used as a wild card here. Read more about wildcards:
+
+	www.linfo.org/wildcard.html 
+	ryanstutorials.net/linuxtutorial/wildcards.php
+	http://www.tldp.org/LDP/GNU-Linux-Tools-Summary/html/x11655.htm
