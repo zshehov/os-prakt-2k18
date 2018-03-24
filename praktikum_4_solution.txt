@@ -1,0 +1,69 @@
+16) mkdir ~/dir1; touch ~/dir1/file{1..3} 
+
+	wc ~/dir1/file{1..3}
+	wc -l -c ~/dir1/file{1..3}
+	cat ~/dir1/file{1..3} | wc -l
+
+17)	cat file2 | tr [[:lower:]] [[:upper:]] > file2_new; mv file2_new file2
+	sed -i 's/.*/\L\0/g' file2 // Stackoverflow helped here: https://stackoverflow.com/questions/4569825/sed-one-liner-to-convert-all-uppercase-to-lowercase 
+
+18)	cat file3 | tr -d 1 > file3_new; mv file3_new file3
+	sed -i 's/1//g' file3 
+
+20) cat file{1,2,3} > big_file
+
+21) cat file2 | tr [[:upper:]] [[:lower:]] > epic_file2
+
+22) cat /etc/passwd | tr -d a | wc -c
+
+23) cut /etc/passwd -f1 -d: | grep -o "." | sort | uniq -c | sort -n 
+
+24) grep /etc/passwd -v -e "ov"
+
+25) cut -f3 -d: /etc/passwd | head -n 46 | tail -n +28 | grep -o "[0-9]$"
+
+26) grep /etc/passwd -e "sFaknum" -A 2 -B 3 
+
+27)	cut -f5 -d: /etc/passwd | cut -f1 -d, | grep -v -e "Ivan " | wc -l 		// Ако е само на латиница
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep -v -e "Ivan |Иван " | wc -l	// На латиница и кирилица. egrep заради или-то "|"
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | grep -v -e "Ivan \|Иван " | wc -l	// На латиница и кирилица. При grep трябва да ескейпнем или-то
+
+28)	Приемаме, че не разглеждаме хората с тирета в имената. На когото му е интересно, може да погледне и тези с тиретата
+	// иначе, [[:alpha:]]([[:alpha:]]*(-[[:alpha:]]+|))+  е примерен general регекс за име с няколко тирета вътре. 
+	// но в случая по-лесно би било да матчнем по "[[:alpha:]-]+" и след това да махнем невалидните имена: "-asd", "asd-", "asd--asd". Считаме "A-BC-D" за валидно
+
+	// egrep заради "+" и "{}", иначе трябваше да ги ескейпваме
+
+	// Ако приемeм, че второто име е името след първото
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "^[[:alpha:]]+ [[:alpha:]]{8,}( [[:alpha:]]+)*" 
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "^[[:alpha:]-]+ [[:alpha:]-]{8,}( [[:alpha:]]+)*" | egrep -v -e "(^|\s)-" -e "-($|\s)" -e "--+"	// с тирета
+	
+	// Ако приемем, че второто име е фамилията
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "([[:alpha:]]+ )+[[:alpha:]]{8,}$" 
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "([[:alpha:]-]+ )+[[:alpha:]-]{8,}$" | egrep -v -e "(^|\s)-" -e "-($|\s|:)" -e "--+"	// с тирета
+
+
+29)	Съображенията от миналата задача важат. Само добавянето на -v, защото освен >7 отричаме и други неща.
+
+	// Ако приемeм, че второто име е името след първото 	
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "^[[:alpha:]]+ [[:alpha:]]{,7}($|( [[:alpha:]]+)*$)"
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "^[[:alpha:]-]+ [[:alpha:]-]{,7}($|( [[:alpha:]-]+)*$)" | egrep -v -e "(^|\s)-" -e "-($|\s)" -e "--+"	// с тирета
+
+	// Ако приемeм, че второто име е фамилията
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "([[:alpha:]]+ )+[[:alpha:]]{,7}$"
+	cut -f5 -d: /etc/passwd | cut -f1 -d, | egrep "([[:alpha:]-]+ )+[[:alpha:]-]{,7}$" | egrep -v -e "(^|\s)-" -e "-($|\s|:)" -e "--+"	// с тирета
+
+
+30)	Опитайте се да измислите регексите сами, за да може при проверката с тези да ги разберете по-лесно. Може да тествате с файла praktikum_4_names_test
+	// Ако приемeм, че второто име е името след първото 	
+	egrep /etc/passwd "([^:]+:){4}[[:alpha:]]+ [[:alpha:]]{,7}(,|:|( [[:alpha:]]+)*(,|:))"
+	egrep /etc/passwd "([^:]+:){4}[[:alpha:]-]+ [[:alpha:]-]{,7}(,|:( [[:alpha:]-]+)*(,|:))" |\
+	egrep -v -e"([^:]+:){4}([[:alpha:]-]+ )*-" -e "([^:]+:){4}([[:alpha:]-]+ )*[[:alpha:]-]+-(\s|,|:)" -e "([^:]+:){4}[^:]*--+[^:]*"	// с тирета
+
+
+	// Ако приемeм, че второто име е фамилията
+	egrep "([^:]+:){4}([[:alpha:]]+ )+[[:alpha:]]{,7}(,|:)"
+	egrep /etc/passwd "([^:]+:){4}([[:alpha:]-]+ )+[[:alpha:]-]{,7}(,|:)" |\
+	egrep -v -e"([^:]+:){4}([[:alpha:]-]+ )*-" -e "([^:]+:){4}([[:alpha:]-]+ )*[[:alpha:]-]+-(\s|,|:)" -e "([^:]+:){4}[^:]*--+[^:]*"	// с тирета
+
+
