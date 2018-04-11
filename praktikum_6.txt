@@ -1,0 +1,118 @@
+1) Изведете съдържанието на /etc/passwd като всеки път, когато има 2 последователни еднакви символа,
+ги оградените в скоби
+Пример:
+
+...
+r(oo)t:x:0:0:r(oo)t:/r(oo)t:/bin/bash
+...
+
+2) Изведете файловете в home директорията ви, които са директории ИЛИ съдържат буквата "а" в името си
+Пример:
+
+резултат от ls -l:
+total 16
+-rw-rw-r-- 1 flat_earth believer    5 Apr 11 23:04 asd
+-rw-rw-r-- 1 flat_earth believer    8 Apr 11 23:04 blah
+drwxrwxr-x 2 flat_earth believer 4096 Apr 11 23:37 shoop
+-rw-rw-r-- 1 flat_earth believer    8 Apr 11 23:04 test
+
+
+Резултат:
+.
+./shoop
+./blah
+./asd
+
+
+---- Ако има нерешени задачи от "Задачи за обработка на текст" ----
+
+https://learn.fmi.uni-sofia.bg/pluginfile.php/167259/mod_resource/content/3/problems-03.txt
+
+
+---- Задачи от предишни контролни ----
+
+*2017*
+
+1) Напишете серия от команди, извеждащи на екрана само броя на всички обекти във
+файловата система, чиито собственик е текущият потребител.
+Забележка:
+Във файловата система със сигурност съществуват директории, до които нямате достъп.
+
+2) Намерете имената на топ 5 файловете в текущата директория с най-много hardlinks.
+
+3) Напишете серия от команди, които вземат от файла /etc/passwd първите имена на
+студентите от специалност СИ, чиито фамилии завършват на “а”. Изведете колко пъти се среща
+най-често срещаното име и кое е то.
+
+Примерно съдържание на файла:
+
+	root:x:0:0:root:/root:/bin/bash
+	daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+	s61934:x:1177:504:Mariq Cholakova:/home/SI/s61934:/bin/bash
+	s61916:x:1178:504:Simeon Aleksandrov:/home/SI/s61916:/bin/bash
+	s61884:x:1179:504:Ruslan Kapelev:/home/SI/s61884:/bin/bash
+	s61895:x:1180:504:Zorka Shindova:/home/SI/s61895:/bin/bash
+	s61899:x:1182:504:Zorka Ivanova, SI, 2kurs, 5gr:/home/SI/s61899:/bin/bash
+	s81374:x:1117:503:Ivan Kamburov, KN, 2kurs, 7gr:/home/KN/s81374:/bin/bash
+	s81382:x:1118:503:Teodora Cirkova:/home/KN/s81382:/bin/bash
+
+Примерен изход:
+	2 Zorka
+
+
+*2016#1*
+
+1) Даден е текстов файл с име philip-j-fry.txt. Напишете серия от команди, които
+извеждат броя редове, съдържащи поне една четна цифра и несъдържащи малка латинска буква от ’a’ до ’w’.
+
+Примерно съдържание на файла:
+
+	123abv123
+	123zz123
+	MMU_2.4
+
+Примерен изход:
+	Броят на търсените редовете е 2
+
+2) Имате файл Bonnie, който съдържа информация за музикални албуми и има специфична структура.
+Началото на всеки ред е годината на издаване на албума, непосредствено следва името на изпълителя на песента.
+
+Примерно съдържание на файл с име "Bonnie":
+
+	2005г. Bonnie - "God Was in the Water" (Randall Bramblett, Davis Causey) – 5:17
+	2005г. Bonnie - "Love on One Condition" (Jon Cleary) – 3:43
+	2005г. Bonnie - "So Close" (Tony Arata, George Marinelli, Pete Wasner) – 3:22
+	2005г. Bonnie - "Trinkets" (Emory Joseph) – 5:02
+	2005г. Bonnie - "Crooked Crown" (David Batteau, Maia Sharp) – 3:49
+	2005г. Bonnie - "Unnecessarily Mercenary" (Jon Cleary) – 3:51
+	2005г. Bonnie - "I Will Not Be Broken" - "Deep Water" (John Capek, Marc Jordan) – 3:58
+
+Напишете последователност от команди, която изпълнява следните действия:
+• извлечете съдържанието на файла, без годината на издаване на албума и без името на изпълнителя
+• сортирайте лексикографски извлеченото съдържание
+
+Примерен изходен файл (с име Bonnie.songs):
+
+	"Crooked Crown" (David Batteau, Maia Sharp) – 3:49
+	"God Was in the Water" (Randall Bramblett, Davis Causey) – 5:17
+	"I Will Not Be Broken" - "Deep Water" (John Capek, Marc Jordan) – 3:58
+	"Love on One Condition" (Jon Cleary) – 3:43
+	"So Close" (Tony Arata, George Marinelli, Pete Wasner) – 3:22
+	"Trinkets" (Emory Joseph) – 5:02
+	"Unnecessarily Mercenary" (Jon Cleary) – 3:51
+
+Измислена
+3) Направете директория big-files и преместете в нея всички обикновени файлове по-големи от 42 byte-a
+
+
+*2016#2*
+Опитайте се да стигнете до решението на задачите сами.
+// hint: да стигнете до решението не значи да скролнете до втората страница
+// 3та задача не е съобразена с материала, до който сме стигнали
+
+https://learn.fmi.uni-sofia.bg/pluginfile.php/101147/mod_resource/content/1/K1_A_2016_SI.pdf
+
+
+
+
+
