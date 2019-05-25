@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdint.h>
+#include <err.h>
 
 int main() {
 
@@ -16,9 +17,14 @@ int main() {
    //
    // NOTE: int arr_with_ints[10]; -> sizeof(arr_with_ints) == 40 (т.е. колко байта е масивът, а НЕ колко елемента)
    // sizeof(arr_with_ints) / sizeof(int) == 10
+   
+   // NOTE: Ако все пак имахме char*, можеше да вземем дължината му със
+   // strlen / strnlen, като strlen("asd") == 3, т.е. не броим null terminator-а, (btw, strlen е линейна операция, тъй като брои char по char докато не стигне null terminator)
 
    int fd = open("test", O_CREAT | O_RDWR, 00700);
-   // skip the check
+   if (fd == -1) {
+      errx(3, "Couldn't open file");
+   }
    
    int i;
 
